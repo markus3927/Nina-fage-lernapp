@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1565C0">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FaGe Lernapp">
+<title>FaGe Lernapp · Nina · 1. Lehrjahr</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --blue: #1565C0;
+  --blue-dark: #0D3E6A;
+  --blue-light: #D6E8F7;
+  --blue-bg: #EAF3FB;
+  --grey-bg: #F5F8FB;
+  --green: #2E7D32;
+  --green-bg: #E8F5E9;
+  --red: #C62828;
+  --red-bg: #FFEBEE;
+  --yellow-bg: #FFF9E6;
+  --text: #2C2C2C;
+  --text-soft: #5a6573;
+  --border: #d6dde6;
+}
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--grey-bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 16px;
+  line-height: 1.5;
+}
+body { padding-bottom: 30px; }
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+  color: white;
+  padding: 22px 18px 26px;
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 4px 14px rgba(21, 101, 192, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: "";
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 140px; height: 140px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+}
+.header::after {
+  content: "";
+  position: absolute;
+  bottom: -30px; left: -30px;
+  width: 90px; height: 90px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+.header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+}
+.header .sub {
+  font-size: 13px;
+  opacity: 0.92;
+  position: relative;
+  z-index: 1;
+}
+.header .badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  margin-top: 8px;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+
+/* PROGRESS */
+.progress-wrap {
+  margin: 14px 18px 0;
+  background: white;
+  padding: 14px 16px;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 8px;
+  color: var(--text-soft);
+}
+.progress-row strong { color: var(--blue-dark); }
+.progress-bar {
+  height: 8px;
+  background: var(--blue-bg);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--blue-dark));
+  border-radius: 5px;
+  transition: width 0.4s ease;
+}
+.reset-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 9px;
+  background: var(--grey-bg);
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+  font-size: 12.5px;
+  font-weight: 500;
+  border-radius: 9px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.reset-btn:active {
+  background: var(--blue-bg);
+  color: var(--blue);
+}
+
+/* CONTENT */
+.content { padding: 18px; }
+
+/* MENU */
+.menu-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--blue-dark);
+  margin: 4px 0 12px 4px;
+}
+.mode-toggle {
+  display: flex;
+  background: white;
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+.mode-btn {
+  flex: 1;
+  padding: 11px 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mode-btn.active {
+  background: var(--blue);
+  color: white;
+  box-shadow: 0 2px 6px rgba(21,101,192,0.3);
+}
+.topic-grid {
+  display: grid;
+  gap: 12px;
+}
+.topic-card {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  cursor: pointer;
+  border-left: 5px solid var(--blue);
+  transition: transform 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.topic-card:active { transform: scale(0.98); }
+.topic-icon {
+  width: 46px; height: 46px;
+  background: var(--blue-bg);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.topic-info { flex: 1; min-width: 0; }
+.topic-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--blue-dark);
+  margin-bottom: 2px;
+}
+.topic-meta {
+  font-size: 12px;
+  color: var(--text-soft);
+}
+.topic-arrow {
+  color: var(--blue);
+  font-size: 20px;
+  font-weight: 600;
+}
+.topic-card[data-topic="anatomie"] { border-left-color: #C62828; }
+.topic-card[data-topic="anatomie"] .topic-icon { background: #FFEBEE; }
+.topic-card[data-topic="hygiene"] { border-left-color: #2E7D32; }
+.topic-card[data-topic="hygiene"] .topic-icon { background: #E8F5E9; }
+.topic-card[data-topic="vitalzeichen"] { border-left-color: #F57C00; }
+.topic-card[data-topic="vitalzeichen"] .topic-icon { background: #FFF3E0; }
+.topic-card[data-topic="medikamente"] { border-left-color: #6A1B9A; }
+.topic-card[data-topic="medikamente"] .topic-icon { background: #F3E5F5; }
+.topic-card[data-topic="mix"] { border-left-color: var(--blue); }
+
+/* QUIZ */
+.quiz-header {
+  background: white;
+  padding: 14px 16px;
+  border-radius: 14px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.back-btn {
+  background: var(--blue-bg);
+  border: none;
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  font-size: 18px;
+  color: var(--blue);
+  cursor: pointer;
+  font-weight: 600;
+}
+.quiz-info { flex: 1; }
+.quiz-info .topic-label {
+  font-size: 12px;
+  color: var(--text-soft);
+}
+.quiz-info .counter {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--blue-dark);
+}
+.quiz-mode-tag {
+  background: var(--blue);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* QUESTION CARD - MC */
+.question-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px 18px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+  margin-bottom: 16px;
+}
+.question-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--blue-dark);
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+.options { display: grid; gap: 10px; }
+.option {
+  background: var(--grey-bg);
+  border: 2px solid var(--border);
+  padding: 13px 14px;
+  border-radius: 11px;
+  font-size: 14.5px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  color: var(--text);
+  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.option .letter {
+  background: white;
+  border: 1.5px solid var(--border);
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--text-soft);
+  flex-shrink: 0;
+}
+.option:active { transform: scale(0.99); }
+.option.selected {
+  border-color: var(--blue);
+  background: var(--blue-bg);
+}
+.option.correct {
+  border-color: var(--green);
+  background: var(--green-bg);
+}
+.option.correct .letter {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+}
+.option.wrong {
+  border-color: var(--red);
+  background: var(--red-bg);
+}
+.option.wrong .letter {
+  background: var(--red);
+  color: white;
+  border-color: var(--red);
+}
+.option.disabled { cursor: default; }
+
+/* EXPLANATION */
+.explanation {
+  background: var(--yellow-bg);
+  border-left: 4px solid #F9A825;
+  padding: 14px 14px;
+  border-radius: 10px;
+  margin-top: 14px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--text);
+  display: none;
+}
+.explanation.show { display: block; animation: fadeIn 0.3s; }
+.explanation strong { color: var(--blue-dark); }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* FLASHCARD */
+.flashcard-container {
+  perspective: 1000px;
+  margin-bottom: 16px;
+}
+.flashcard {
+  position: relative;
+  width: 100%;
+  min-height: 280px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  cursor: pointer;
+}
+.flashcard.flipped { transform: rotateY(180deg); }
+.flashcard-face {
+  position: absolute;
+  width: 100%;
+  min-height: 280px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 16px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+.flashcard-front {
+  background: white;
+  border: 2px solid var(--blue-light);
+}
+.flashcard-back {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+  color: white;
+  transform: rotateY(180deg);
+}
+.card-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 14px;
+  opacity: 0.7;
+}
+.flashcard-front .card-label { color: var(--blue); }
+.flashcard-back .card-label { color: rgba(255,255,255,0.85); opacity: 1; }
+.card-text {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+.flashcard-front .card-text { color: var(--blue-dark); }
+.card-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 0; right: 0;
+  font-size: 11px;
+  text-align: center;
+}
+.flashcard-front .card-hint { color: var(--text-soft); }
+.flashcard-back .card-hint { color: rgba(255,255,255,0.8); }
+
+.card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.card-btn {
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.1s;
+}
+.card-btn:active { transform: scale(0.97); }
+.card-btn-no {
+  background: var(--red-bg);
+  color: var(--red);
+}
+.card-btn-yes {
+  background: var(--green-bg);
+  color: var(--green);
+}
+
+/* NAV BUTTONS */
+.nav-row {
+  display: flex;
+  gap: 10px;
+}
+.nav-btn {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.1s;
+}
+.nav-btn:active { transform: scale(0.98); }
+.nav-btn-primary {
+  background: var(--blue);
+  color: white;
+  box-shadow: 0 2px 6px rgba(21,101,192,0.3);
+}
+.nav-btn-primary:disabled {
+  background: var(--border);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+.nav-btn-secondary {
+  background: white;
+  color: var(--blue);
+  border: 1.5px solid var(--blue-light);
+}
+
+/* RESULT */
+.result-card {
+  background: white;
+  border-radius: 18px;
+  padding: 28px 20px;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+.result-emoji {
+  font-size: 56px;
+  margin-bottom: 8px;
+}
+.result-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--blue-dark);
+  margin-bottom: 6px;
+}
+.result-score {
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--blue);
+  margin: 14px 0 4px;
+}
+.result-detail {
+  font-size: 14px;
+  color: var(--text-soft);
+  margin-bottom: 22px;
+}
+.result-msg {
+  background: var(--blue-bg);
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--blue-dark);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* HIDDEN */
+.hidden { display: none !important; }
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  font-size: 10.5px;
+  color: var(--text-soft);
+  margin-top: 24px;
+  padding: 0 18px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📚 FaGe Lernapp</h1>
+  <div class="sub">Nina · 1. Lehrjahr · SMI Spitalverband</div>
+  <div class="badge">Anatomie · Hygiene · Vitalzeichen · Medikamente</div>
+</div>
+
+<!-- MENU SCREEN -->
+<div id="menu-screen" class="content">
+  <div class="progress-wrap">
+    <div class="progress-row">
+      <span>Dein Fortschritt</span>
+      <strong id="progress-text">0 Einheiten</strong>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <button class="reset-btn" id="reset-btn">↻ Fortschritt zurücksetzen</button>
+  </div>
+
+  <div class="content" style="padding:18px 0 0">
+    <div class="menu-title">Lern-Modus wählen</div>
+    <div class="mode-toggle">
+      <button class="mode-btn active" data-mode="quiz">🎯 Quiz</button>
+      <button class="mode-btn" data-mode="cards">🃏 Karteikarten</button>
+      <button class="mode-btn" data-mode="mixed">🔀 Gemischt</button>
+    </div>
+
+    <div class="menu-title">Thema wählen</div>
+    <div class="topic-grid">
+      <div class="topic-card" data-topic="anatomie">
+        <div class="topic-icon">🫀</div>
+        <div class="topic-info">
+          <div class="topic-name">Anatomie & Körpersysteme</div>
+          <div class="topic-meta" id="meta-anatomie">– Fragen</div>
+        </div>
+        <div class="topic-arrow">›</div>
+      </div>
+      <div class="topic-card" data-topic="hygiene">
+        <div class="topic-icon">🧼</div>
+        <div class="topic-info">
+          <div class="topic-name">Hygiene & Infektionsprävention</div>
+          <div class="topic-meta" id="meta-hygiene">– Fragen</div>
+        </div>
+        <div class="topic-arrow">›</div>
+      </div>
+      <div class="topic-card" data-topic="vitalzeichen">
+        <div class="topic-icon">🌡️</div>
+        <div class="topic-info">
+          <div class="topic-name">Vitalzeichen & Pflegegrundlagen</div>
+          <div class="topic-meta" id="meta-vitalzeichen">– Fragen</div>
+        </div>
+        <div class="topic-arrow">›</div>
+      </div>
+      <div class="topic-card" data-topic="medikamente">
+        <div class="topic-icon">💊</div>
+        <div class="topic-info">
+          <div class="topic-name">Medikamentenlehre Grundlagen</div>
+          <div class="topic-meta" id="meta-medikamente">– Fragen</div>
+        </div>
+        <div class="topic-arrow">›</div>
+      </div>
+      <div class="topic-card" data-topic="mix">
+        <div class="topic-icon">🎲</div>
+        <div class="topic-info">
+          <div class="topic-name">Bunte Mischung</div>
+          <div class="topic-meta">Alle Themen gemischt</div>
+        </div>
+        <div class="topic-arrow">›</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div id="quiz-screen" class="content hidden">
+  <div class="quiz-header">
+    <button class="back-btn" id="back-btn">‹</button>
+    <div class="quiz-info">
+      <div class="topic-label" id="quiz-topic-label">Anatomie</div>
+      <div class="counter" id="quiz-counter">Frage 1 / 10</div>
+    </div>
+    <div class="quiz-mode-tag" id="quiz-mode-tag">Quiz</div>
+  </div>
+
+  <div id="quiz-content"></div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="result-screen" class="content hidden">
+  <div class="result-card">
+    <div class="result-emoji" id="result-emoji">🎉</div>
+    <div class="result-title" id="result-title">Geschafft!</div>
+    <div class="result-score" id="result-score">8 / 10</div>
+    <div class="result-detail" id="result-detail">Korrekt beantwortet</div>
+    <div class="result-msg" id="result-msg">Super gemacht, Nina! 💪</div>
+    <div class="nav-row">
+      <button class="nav-btn nav-btn-secondary" id="result-menu">‹ Menü</button>
+      <button class="nav-btn nav-btn-primary" id="result-again">Nochmal</button>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Lernapp für Nina · Erstellt vom Team OPUS 4.7<br>
+  Bioenergetische Frequenzarbeit · Markus Rufer · Meiringen
+</div>
+
+<script>
+// ============================================================
+// FRAGEN-DATENBANK · FaGe 1. Lehrjahr
+// ============================================================
+const QUESTIONS = {
+  anatomie: [
+    { type: 'mc', q: 'Wie viele Knochen hat das erwachsene menschliche Skelett ungefähr?',
+      o: ['ca. 100', 'ca. 150', 'ca. 206', 'ca. 280'],
+      correct: 2,
+      e: 'Das erwachsene Skelett besteht aus ca. 206 Knochen. Säuglinge haben mehr (ca. 270), da einige im Wachstum verschmelzen.' },
+    { type: 'card', q: 'Welche 4 Hauptgewebearten gibt es im Körper?',
+      a: 'Epithelgewebe, Binde- und Stützgewebe, Muskelgewebe, Nervengewebe.' },
+    { type: 'mc', q: 'Welcher Teil des Herzens pumpt sauerstoffreiches Blut in den Körperkreislauf?',
+      o: ['Rechter Vorhof', 'Rechte Kammer', 'Linker Vorhof', 'Linke Kammer'],
+      correct: 3,
+      e: 'Die linke Herzkammer (Ventrikel) pumpt das sauerstoffreiche Blut über die Aorta in den Körperkreislauf. Die rechte Kammer pumpt in den Lungenkreislauf.' },
+    { type: 'card', q: 'Was ist der Unterschied zwischen Arterien und Venen?',
+      a: 'Arterien führen Blut vom Herzen weg (meist sauerstoffreich, höherer Druck, dickere Wand). Venen führen Blut zum Herzen hin (meist sauerstoffarm, niedriger Druck, mit Venenklappen).' },
+    { type: 'mc', q: 'Wo findet der Gasaustausch in der Lunge statt?',
+      o: ['In der Luftröhre', 'In den Bronchien', 'In den Lungenbläschen (Alveolen)', 'Im Zwerchfell'],
+      correct: 2,
+      e: 'Der Gasaustausch (O₂ rein, CO₂ raus) erfolgt in den Alveolen – winzigen Lungenbläschen mit sehr dünner Wand und grosser Oberfläche.' },
+    { type: 'mc', q: 'Welches Organ produziert Insulin?',
+      o: ['Leber', 'Milz', 'Bauchspeicheldrüse (Pankreas)', 'Niere'],
+      correct: 2,
+      e: 'Die Bauchspeicheldrüse produziert in den Langerhans-Inseln (Beta-Zellen) das Hormon Insulin, das den Blutzucker senkt.' },
+    { type: 'card', q: 'Welche 3 Abschnitte hat der Dünndarm?',
+      a: 'Duodenum (Zwölffingerdarm), Jejunum (Leerdarm), Ileum (Krummdarm).' },
+    { type: 'mc', q: 'Wie viele Kammern hat das menschliche Herz?',
+      o: ['2', '3', '4', '6'],
+      correct: 2,
+      e: 'Das Herz hat 4 Hohlräume: 2 Vorhöfe (Atrien) und 2 Kammern (Ventrikel) – rechts und links jeweils.' },
+    { type: 'card', q: 'Was ist die Hauptaufgabe der Nieren?',
+      a: 'Filtration des Blutes, Bildung von Urin, Regulation von Flüssigkeits- und Elektrolythaushalt sowie Säure-Basen-Gleichgewicht.' },
+    { type: 'mc', q: 'Welcher Knochen ist der längste im menschlichen Körper?',
+      o: ['Schienbein (Tibia)', 'Oberschenkelknochen (Femur)', 'Oberarmknochen (Humerus)', 'Schlüsselbein (Klavikula)'],
+      correct: 1,
+      e: 'Der Femur (Oberschenkelknochen) ist der längste und stärkste Knochen des Körpers.' },
+    { type: 'mc', q: 'Welche Funktion haben die roten Blutkörperchen (Erythrozyten)?',
+      o: ['Blutgerinnung', 'Sauerstofftransport', 'Abwehr von Krankheitserregern', 'Wundheilung'],
+      correct: 1,
+      e: 'Erythrozyten transportieren mit Hilfe von Hämoglobin den Sauerstoff von der Lunge zu den Zellen und CO₂ zurück.' },
+    { type: 'card', q: 'Was bedeutet "kranial" und "kaudal"?',
+      a: 'Kranial = zum Kopf hin (oben). Kaudal = zum Steiss/Schwanz hin (unten). Anatomische Lagebezeichnungen.' },
+    { type: 'mc', q: 'Welches ist das grösste Organ des menschlichen Körpers?',
+      o: ['Leber', 'Lunge', 'Haut', 'Darm'],
+      correct: 2,
+      e: 'Die Haut ist mit ca. 1.5–2 m² das grösste Organ. Sie schützt, reguliert die Temperatur und ist Sinnesorgan.' },
+    { type: 'card', q: 'Welche 3 Schichten hat die Haut?',
+      a: 'Epidermis (Oberhaut), Dermis (Lederhaut), Subkutis (Unterhaut).' },
+    { type: 'mc', q: 'Wie nennt man die Bewegung des Beugens eines Gelenks?',
+      o: ['Extension', 'Flexion', 'Abduktion', 'Rotation'],
+      correct: 1,
+      e: 'Flexion = Beugung. Extension = Streckung. Abduktion = Wegführen vom Körper. Adduktion = Heranführen.' }
+  ],
+
+  hygiene: [
+    { type: 'mc', q: 'Wie lange sollte die Händedesinfektion mindestens dauern?',
+      o: ['10 Sekunden', '30 Sekunden', '60 Sekunden', '2 Minuten'],
+      correct: 1,
+      e: 'Die hygienische Händedesinfektion mit alkoholischem Desinfektionsmittel dauert mindestens 30 Sekunden – die Hände müssen die ganze Zeit feucht sein.' },
+    { type: 'card', q: 'Was sind die "5 Momente der Händehygiene" laut WHO?',
+      a: '1. Vor Patientenkontakt, 2. Vor aseptischer Tätigkeit, 3. Nach Kontakt mit potenziell infektiösem Material, 4. Nach Patientenkontakt, 5. Nach Kontakt mit Patientenumgebung.' },
+    { type: 'mc', q: 'Was ist der Unterschied zwischen Reinigung und Desinfektion?',
+      o: ['Es gibt keinen Unterschied', 'Reinigung entfernt Schmutz, Desinfektion reduziert Keime', 'Desinfektion ist immer steril', 'Reinigung tötet alle Bakterien'],
+      correct: 1,
+      e: 'Reinigung entfernt sichtbaren Schmutz und einen Teil der Keime. Desinfektion reduziert Krankheitserreger so weit, dass keine Infektion mehr möglich ist. Sterilisation = Abtötung ALLER Keime.' },
+    { type: 'mc', q: 'Welche Schutzausrüstung gehört zur Standardhygiene?',
+      o: ['Nur Handschuhe', 'Handschuhe und Schutzbrille', 'Handschuhe, Schürze, Mundschutz, ggf. Schutzbrille', 'FFP3-Maske immer'],
+      correct: 2,
+      e: 'Zur PSA (Persönliche Schutzausrüstung) gehören je nach Tätigkeit: Handschuhe, Schürze/Kittel, Mund-Nasen-Schutz und ggf. Schutzbrille.' },
+    { type: 'card', q: 'Was bedeutet "aseptisch" und was bedeutet "septisch"?',
+      a: 'Aseptisch = keimfrei / ohne Erreger (z.B. Operationsfeld). Septisch = mit Krankheitserregern befallen (z.B. infizierte Wunde).' },
+    { type: 'mc', q: 'In welcher Reihenfolge wird die PSA korrekt ANGEZOGEN?',
+      o: ['Maske → Schürze → Handschuhe → Schutzbrille', 'Schürze → Maske → Schutzbrille → Handschuhe', 'Handschuhe → Maske → Schürze → Schutzbrille', 'Schutzbrille → Handschuhe → Schürze → Maske'],
+      correct: 1,
+      e: 'Anziehen: 1. Schürze, 2. Maske, 3. Schutzbrille, 4. Handschuhe (zuletzt). Beim AUSziehen umgekehrt: zuerst Handschuhe, zuletzt Maske.' },
+    { type: 'card', q: 'Was ist eine nosokomiale Infektion?',
+      a: 'Eine Krankenhausinfektion – eine Infektion, die im Zusammenhang mit einer stationären oder ambulanten medizinischen Behandlung erworben wird (frühestens 48h nach Eintritt).' },
+    { type: 'mc', q: 'Welcher Erreger ist besonders gefürchtet wegen Antibiotikaresistenz?',
+      o: ['Influenza-Virus', 'MRSA (Methicillin-resistenter Staphylococcus aureus)', 'Norovirus', 'Candida albicans'],
+      correct: 1,
+      e: 'MRSA ist resistent gegen viele Antibiotika und wird vor allem im Spital übertragen. Strikte Hygiene und Isolation sind wichtig.' },
+    { type: 'mc', q: 'Wann müssen sterile Handschuhe verwendet werden?',
+      o: ['Bei jedem Patientenkontakt', 'Bei aseptischen Tätigkeiten (z.B. Wundversorgung, Katheter)', 'Nur bei isolierten Patienten', 'Beim Essenausteilen'],
+      correct: 1,
+      e: 'Sterile Handschuhe sind nötig bei aseptischen Tätigkeiten: Wundversorgung, Katheteranlage, OP. Für normale Pflege reichen unsterile Handschuhe.' },
+    { type: 'card', q: 'Welche 3 Hauptübertragungswege von Erregern gibt es im Spital?',
+      a: '1. Kontaktübertragung (häufigster Weg, über Hände/Gegenstände), 2. Tröpfcheninfektion (Husten, Niesen), 3. Aerogene Übertragung (Aerosole, z.B. Tuberkulose).' },
+    { type: 'mc', q: 'Wie wird kontaminierte Schmutzwäsche korrekt entsorgt?',
+      o: ['Im normalen Wäschesack', 'In speziell gekennzeichneten Säcken (oft rot/orange)', 'In den Hausmüll', 'Direkt in die Waschmaschine'],
+      correct: 1,
+      e: 'Kontaminierte Wäsche kommt in farblich gekennzeichnete Säcke (je nach Spital rot oder orange), oft mit wasserlöslicher Innenfolie, die direkt mit in die Waschmaschine kann.' },
+    { type: 'card', q: 'Was sind die wichtigsten Indikationen für sterile Arbeitsweise?',
+      a: 'Wundversorgung, Katheter (Blasen-, Venen-, ZVK), Injektionen in sterile Körperhöhlen, OP, Verbandwechsel bei offenen Wunden.' },
+    { type: 'mc', q: 'Wie lange darf alkoholische Händedesinfektion auf der Haut wirken bevor sie wirksam ist?',
+      o: ['Sofort nach Auftragen', 'Bis sie verdunstet ist (mind. 30 Sek.)', 'Mind. 5 Minuten', 'Sie muss abgewaschen werden'],
+      correct: 1,
+      e: 'Das Mittel muss vollständig auf den Händen einwirken, bis es verdunstet ist – mindestens 30 Sekunden. Nicht abwischen, nicht trocknen.' },
+    { type: 'mc', q: 'Was ist Sterilisation?',
+      o: ['Reduktion der Keime auf ein Minimum', 'Vollständige Abtötung ALLER Mikroorganismen einschliesslich Sporen', 'Reinigung mit Wasser und Seife', 'Lufttrocknung'],
+      correct: 1,
+      e: 'Sterilisation = vollständige Abtötung aller vermehrungsfähigen Mikroorganismen UND deren Sporen. Methoden: Dampf (Autoklav), Heissluft, Gas, Strahlen.' },
+    { type: 'card', q: 'Was ist die "Bare-Below-Elbow"-Regel?',
+      a: 'Im klinischen Bereich: Unterarme frei (kurze Ärmel), keine Uhr, keine Ringe, keine Armbänder, kurze saubere Fingernägel, kein Nagellack. Ermöglicht korrekte Händedesinfektion.' }
+  ],
+
+  vitalzeichen: [
+    { type: 'mc', q: 'Was ist der normale Ruhepuls eines gesunden Erwachsenen?',
+      o: ['40–60/min', '60–100/min', '100–140/min', '140–180/min'],
+      correct: 1,
+      e: 'Normalwert: 60–100 Schläge/min. Unter 60 = Bradykardie (z.B. bei Sportlern normal). Über 100 = Tachykardie.' },
+    { type: 'card', q: 'Welche 5 Vitalzeichen werden standardmässig gemessen?',
+      a: 'Puls, Blutdruck, Atemfrequenz, Temperatur, Sauerstoffsättigung (SpO₂). Manchmal auch Schmerz als 6. Vitalzeichen.' },
+    { type: 'mc', q: 'Welcher Blutdruckwert gilt als optimal?',
+      o: ['unter 120/80 mmHg', '130/85 mmHg', '140/90 mmHg', '150/95 mmHg'],
+      correct: 0,
+      e: 'Optimal: < 120/80. Normal: < 130/85. Hochnormal: 130–139/85–89. Hypertonie ab 140/90 mmHg (in der Praxis gemessen).' },
+    { type: 'mc', q: 'Wo wird die Körperkerntemperatur am genauesten gemessen?',
+      o: ['Achsel (axillär)', 'Mund (oral)', 'Ohr (tympanal)', 'Mastdarm (rektal)'],
+      correct: 3,
+      e: 'Rektale Messung gibt den genauesten Wert für die Körperkerntemperatur. Axillär ist am ungenauesten (ca. 0.5°C tiefer als rektal).' },
+    { type: 'card', q: 'Was ist die normale Atemfrequenz eines Erwachsenen in Ruhe?',
+      a: '12–20 Atemzüge pro Minute. Tachypnoe = > 20/min, Bradypnoe = < 12/min, Apnoe = Atemstillstand.' },
+    { type: 'mc', q: 'Was bedeutet eine Sauerstoffsättigung (SpO₂) von 98 %?',
+      o: ['Sauerstoffmangel', 'Normaler Wert', 'Überdosis Sauerstoff', 'Messfehler'],
+      correct: 1,
+      e: 'Normalbereich: 95–100 %. Unter 90 % = kritisch (Hypoxämie). Bei COPD-Patienten kann der Zielbereich tiefer liegen (88–92 %).' },
+    { type: 'mc', q: 'Was ist Fieber?',
+      o: ['Körpertemperatur über 37.0 °C', 'Körpertemperatur über 38.0 °C (rektal)', 'Körpertemperatur über 39.5 °C', 'Nur wenn Schüttelfrost dazu kommt'],
+      correct: 1,
+      e: 'Fieber: ab 38.0 °C rektal. Subfebril: 37.5–37.9 °C. Hohes Fieber: ab 39.0 °C. Hyperpyrexie: > 41 °C (lebensbedrohlich).' },
+    { type: 'card', q: 'Wie wird der Blutdruck korrekt gemessen?',
+      a: 'Patient sitzt 5 Min ruhig, Arm auf Herzhöhe gelagert, Manschette passend zur Armgrösse, am unbekleideten Oberarm, nicht durch Stoff messen, beim ersten Mal an beiden Armen.' },
+    { type: 'mc', q: 'Welcher Wert wird beim Blutdruck zuerst genannt (systolisch/diastolisch)?',
+      o: ['Diastolisch zuerst', 'Systolisch zuerst', 'Reihenfolge egal', 'Nur Mittelwert wird angegeben'],
+      correct: 1,
+      e: 'Systolisch zuerst (oberer Wert, beim Herzschlag), dann diastolisch (unterer Wert, in der Entspannungsphase). Beispiel: 120/80 mmHg.' },
+    { type: 'card', q: 'Was ist ein Dekubitus und wie wird er klassifiziert?',
+      a: 'Dekubitus = Druckgeschwür durch andauernden Druck auf die Haut. EPUAP-Klassifikation: Kategorie 1 (nicht wegdrückbare Rötung), 2 (Hautdefekt bis Dermis), 3 (volle Hautdicke), 4 (bis Knochen/Sehne).' },
+    { type: 'mc', q: 'Welche Pulsstelle wird am häufigsten zum Tasten verwendet?',
+      o: ['A. femoralis (Leiste)', 'A. radialis (Handgelenk)', 'A. carotis (Hals)', 'A. dorsalis pedis (Fuss)'],
+      correct: 1,
+      e: 'Die A. radialis am Handgelenk ist Standardstelle für die Pulsmessung. Carotis nur in Notfällen (Bewusstlosigkeit).' },
+    { type: 'mc', q: 'Was beobachtest du beim Puls AUSSER der Frequenz?',
+      o: ['Nur Frequenz reicht', 'Rhythmus und Qualität (Stärke, Härte)', 'Nur Hautfarbe', 'Pulsdauer in Sekunden'],
+      correct: 1,
+      e: 'Beim Puls werden beobachtet: Frequenz, Rhythmus (regelmässig/unregelmässig) und Qualität (kräftig, schwach, hart, weich, fadenförmig).' },
+    { type: 'card', q: 'Was ist eine Bradykardie und ein typischer Grund?',
+      a: 'Bradykardie = Pulsfrequenz unter 60/min. Gründe: Sportlerherz (physiologisch), Hypothyreose, Medikamente (Betablocker), Herzleitungsstörungen.' },
+    { type: 'mc', q: 'Welche Hautfarbe-Veränderung deutet auf Sauerstoffmangel hin?',
+      o: ['Rötung', 'Blässe', 'Zyanose (bläuliche Verfärbung)', 'Gelbfärbung'],
+      correct: 2,
+      e: 'Zyanose = bläuliche Verfärbung von Haut und Schleimhäuten (besonders Lippen, Finger) bei Sauerstoffmangel. Ikterus (gelb) deutet auf Lebererkrankungen hin.' },
+    { type: 'mc', q: 'Wie oft sollten Vitalzeichen bei einem stabilen Patienten dokumentiert werden?',
+      o: ['Nur einmal beim Eintritt', 'Stündlich', 'Mindestens 1× pro Schicht (laut Vorgabe)', 'Nur bei Beschwerden'],
+      correct: 2,
+      e: 'Bei stabilen Patienten meist 1× pro Schicht oder nach ärztlicher Anordnung. Bei instabilen Patienten engmaschiger (alle 15 Min – 1h). Immer nach Vorgabe der Station.' }
+  ],
+
+  medikamente: [
+    { type: 'mc', q: 'Wie heisst die berühmte "6-R-Regel" bei der Medikamentengabe?',
+      o: ['Richtiger Patient, richtiges Medikament, richtige Dosis, richtige Zeit, richtige Applikation, richtige Dokumentation', 'Schnell, Sauber, Sicher, Sorgfältig, Steril, Standardisiert', 'Reden, Rechnen, Reichen, Rühren, Ruhen, Rezeptieren', 'Es gibt keine 6-R-Regel'],
+      correct: 0,
+      e: 'Die 6-R-Regel: Richtiger Patient, richtiges Medikament, richtige Dosierung, richtige Applikationsart, richtiger Zeitpunkt, richtige Dokumentation. Wichtigste Sicherheitsregel!' },
+    { type: 'card', q: 'Was bedeutet "p.o." auf einem Rezept?',
+      a: '"per os" – durch den Mund, also oral / zum Schlucken (Tabletten, Kapseln, Saft).' },
+    { type: 'mc', q: 'Was bedeutet "i.v."?',
+      o: ['intravenös (in die Vene)', 'intramuskulär (in den Muskel)', 'subkutan (unter die Haut)', 'inhalativ'],
+      correct: 0,
+      e: 'i.v. = intravenös (in die Vene). i.m. = intramuskulär. s.c. = subkutan. p.o. = per os. p.r. = per rektum.' },
+    { type: 'card', q: 'Welche 5 häufigsten Applikationswege gibt es für Medikamente?',
+      a: 'Oral (p.o.), parenteral (i.v., i.m., s.c.), topisch (auf die Haut), inhalativ (Lunge), rektal (p.r.).' },
+    { type: 'mc', q: 'Was bedeutet "BTM" auf einem Rezept?',
+      o: ['Beruhigungstabletten', 'Betäubungsmittel', 'Blutdrucksenker', 'Beipackzettel-Mittel'],
+      correct: 1,
+      e: 'BTM = Betäubungsmittel (z.B. Morphin, Fentanyl). Diese unterliegen besonderen gesetzlichen Vorschriften: spezielle Rezepte, doppelte Dokumentation, abschliessbarer Schrank.' },
+    { type: 'mc', q: 'Was ist eine "Allergie" gegen ein Medikament?',
+      o: ['Keine Wirkung', 'Eine erwartete Nebenwirkung', 'Eine überschiessende Immunreaktion', 'Wenn das Medikament schmeckt schlecht'],
+      correct: 2,
+      e: 'Allergie = überschiessende Immunreaktion (z.B. Hautausschlag, Atemnot, anaphylaktischer Schock). Wichtig: Allergien immer dokumentieren und vor jeder Gabe prüfen!' },
+    { type: 'card', q: 'Was bedeutet "1-1-1-1" auf einem Medikamentenplan?',
+      a: '4× täglich je 1 Einheit (z.B. 1 Tablette): morgens – mittags – abends – zur Nacht.' },
+    { type: 'mc', q: 'Wie sollte eine Tablette korrekt verabreicht werden?',
+      o: ['Trocken schlucken lassen', 'Mit ausreichend Wasser, Patient sitzt aufrecht', 'In Saft auflösen (immer)', 'Im Liegen verabreichen'],
+      correct: 1,
+      e: 'Tabletten mit ausreichend Wasser (mind. 100 ml), Patient sitzt aufrecht oder steht – verhindert, dass die Tablette in der Speiseröhre stecken bleibt.' },
+    { type: 'mc', q: 'Was ist der Unterschied zwischen Generika und Originalpräparat?',
+      o: ['Generika sind weniger wirksam', 'Generika enthalten den gleichen Wirkstoff, sind aber günstiger', 'Generika sind illegal', 'Es gibt keinen Unterschied'],
+      correct: 1,
+      e: 'Generika enthalten den gleichen Wirkstoff in gleicher Menge wie das Original (bioäquivalent), sind aber günstiger, da kein Patentschutz mehr. Hilfsstoffe können sich unterscheiden.' },
+    { type: 'card', q: 'Was muss bei der Dokumentation einer Medikamentengabe immer erfasst werden?',
+      a: 'Datum, Uhrzeit, Medikament, Dosis, Applikationsweg, ausführende Person (Visum), beim Patienten beobachtete Wirkungen/Nebenwirkungen.' },
+    { type: 'mc', q: 'Was bedeutet "Reserve" auf dem Medikamentenblatt?',
+      o: ['Muss zwingend gegeben werden', 'Wird nur bei Bedarf gegeben (z.B. bei Schmerzen)', 'Reservepackung im Schrank', 'Nur am Wochenende'],
+      correct: 1,
+      e: 'Reserve = Bedarfsmedikation. Wird nur bei Bedarf nach festgelegtem Schema gegeben (z.B. bei Schmerzen, Übelkeit). Maximaldosis und Mindestabstand beachten!' },
+    { type: 'card', q: 'Wie werden Augentropfen korrekt verabreicht?',
+      a: 'Hände desinfizieren, Patient blickt nach oben, Unterlid leicht herunterziehen, Tropfen in den Bindehautsack (nicht direkt aufs Auge), Auge schliessen lassen, evtl. Tränenkanal kurz andrücken. Tropfflasche nicht berühren.' },
+    { type: 'mc', q: 'Was bedeutet "Kontraindikation"?',
+      o: ['Empfohlene Anwendung', 'Gegenanzeige – das Medikament darf NICHT gegeben werden', 'Wirkstoffmenge', 'Lagerungstemperatur'],
+      correct: 1,
+      e: 'Kontraindikation = Gegenanzeige. Bedingung, bei der ein Medikament nicht gegeben werden darf (z.B. Allergie, Schwangerschaft, bestimmte Erkrankungen).' },
+    { type: 'mc', q: 'Wie werden Insulinspritzen typischerweise verabreicht?',
+      o: ['intravenös', 'intramuskulär', 'subkutan', 'oral'],
+      correct: 2,
+      e: 'Insulin wird subkutan (s.c.) gespritzt – meist in Bauch, Oberschenkel oder Oberarm. Spritzstellen wechseln, um Lipodystrophie zu vermeiden.' },
+    { type: 'card', q: 'Welche Aufgaben darf eine FaGe im 1. Lehrjahr bei Medikamenten übernehmen?',
+      a: 'Unter Aufsicht: Vorbereiten, Verabreichen oraler Medikamente nach Plan, Beobachten von Wirkung/Nebenwirkungen, Dokumentation. NICHT eigenständig: i.v.-Gabe, BTM, neue Verordnungen umsetzen ohne Kontrolle.' }
+  ]
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let state = {
+  mode: 'quiz',  // quiz, cards, mixed
+  currentTopic: null,
+  questions: [],
+  index: 0,
+  correct: 0,
+  answered: false,
+  flipped: false,
+  totalAnsweredEver: 0
+};
+
+// ============================================================
+// HELPERS
+// ============================================================
+function shuffle(array) {
+  const a = [...array];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function getQuestionsForTopic(topic, mode) {
+  let pool;
+  if (topic === 'mix') {
+    pool = [...QUESTIONS.anatomie, ...QUESTIONS.hygiene, ...QUESTIONS.vitalzeichen, ...QUESTIONS.medikamente];
+  } else {
+    pool = [...QUESTIONS[topic]];
+  }
+
+  if (mode === 'quiz') {
+    pool = pool.filter(q => q.type === 'mc');
+  } else if (mode === 'cards') {
+    pool = pool.filter(q => q.type === 'card');
+  }
+  // mixed = alle
+
+  return shuffle(pool).slice(0, 10);
+}
+
+function topicLabel(topic) {
+  return {
+    anatomie: '🫀 Anatomie',
+    hygiene: '🧼 Hygiene',
+    vitalzeichen: '🌡️ Vitalzeichen',
+    medikamente: '💊 Medikamente',
+    mix: '🎲 Bunte Mischung'
+  }[topic] || topic;
+}
+
+function modeLabel(mode) {
+  return { quiz: 'Quiz', cards: 'Karten', mixed: 'Gemischt' }[mode];
+}
+
+// ============================================================
+// MENU
+// ============================================================
+function updateMenuMeta() {
+  const counts = {
+    anatomie: QUESTIONS.anatomie.length,
+    hygiene: QUESTIONS.hygiene.length,
+    vitalzeichen: QUESTIONS.vitalzeichen.length,
+    medikamente: QUESTIONS.medikamente.length
+  };
+  for (const k in counts) {
+    const el = document.getElementById('meta-' + k);
+    if (el) el.textContent = counts[k] + ' Lerneinheiten';
+  }
+}
+
+function setMode(mode) {
+  state.mode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.mode === mode);
+  });
+}
+
+function showMenu() {
+  document.getElementById('menu-screen').classList.remove('hidden');
+  document.getElementById('quiz-screen').classList.add('hidden');
+  document.getElementById('result-screen').classList.add('hidden');
+  updateProgress();
+}
+
+function startTopic(topic) {
+  state.currentTopic = topic;
+  state.questions = getQuestionsForTopic(topic, state.mode);
+
+  if (state.questions.length === 0) {
+    alert('Für diesen Modus sind keine Fragen verfügbar. Probier einen anderen Modus.');
+    return;
+  }
+
+  state.index = 0;
+  state.correct = 0;
+  state.answered = false;
+  state.flipped = false;
+
+  document.getElementById('menu-screen').classList.add('hidden');
+  document.getElementById('quiz-screen').classList.remove('hidden');
+  document.getElementById('result-screen').classList.add('hidden');
+
+  document.getElementById('quiz-topic-label').textContent = topicLabel(topic);
+  document.getElementById('quiz-mode-tag').textContent = modeLabel(state.mode);
+
+  renderQuestion();
+}
+
+// ============================================================
+// RENDER QUESTION
+// ============================================================
+function renderQuestion() {
+  const q = state.questions[state.index];
+  document.getElementById('quiz-counter').textContent =
+    `Frage ${state.index + 1} / ${state.questions.length}`;
+
+  const container = document.getElementById('quiz-content');
+  state.answered = false;
+  state.flipped = false;
+
+  if (q.type === 'mc') {
+    renderMC(q, container);
+  } else {
+    renderCard(q, container);
+  }
+}
+
+function renderMC(q, container) {
+  const letters = ['A', 'B', 'C', 'D', 'E'];
+  container.innerHTML = `
+    <div class="question-card">
+      <div class="question-text">${q.q}</div>
+      <div class="options">
+        ${q.o.map((opt, i) => `
+          <button class="option" data-idx="${i}">
+            <span class="letter">${letters[i]}</span>
+            <span>${opt}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="explanation">
+        <strong>💡 Erklärung:</strong> ${q.e}
+      </div>
+    </div>
+    <div class="nav-row">
+      <button class="nav-btn nav-btn-secondary" id="quit-btn">Abbrechen</button>
+      <button class="nav-btn nav-btn-primary" id="next-btn" disabled>Weiter ›</button>
+    </div>
+  `;
+
+  container.querySelectorAll('.option').forEach(btn => {
+    btn.addEventListener('click', () => answerMC(parseInt(btn.dataset.idx)));
+  });
+  document.getElementById('next-btn').addEventListener('click', nextQuestion);
+  document.getElementById('quit-btn').addEventListener('click', confirmQuit);
+}
+
+function answerMC(selectedIdx) {
+  if (state.answered) return;
+  state.answered = true;
+
+  const q = state.questions[state.index];
+  const options = document.querySelectorAll('.option');
+  const isCorrect = selectedIdx === q.correct;
+
+  if (isCorrect) state.correct++;
+  state.totalAnsweredEver++;
+
+  options.forEach((opt, i) => {
+    opt.classList.add('disabled');
+    if (i === q.correct) opt.classList.add('correct');
+    else if (i === selectedIdx) opt.classList.add('wrong');
+  });
+
+  document.getElementById('explanation').classList.add('show');
+  document.getElementById('next-btn').disabled = false;
+}
+
+function renderCard(q, container) {
+  container.innerHTML = `
+    <div class="flashcard-container">
+      <div class="flashcard" id="flashcard">
+        <div class="flashcard-face flashcard-front">
+          <div class="card-label">FRAGE</div>
+          <div class="card-text">${q.q}</div>
+          <div class="card-hint">Tippe zum Umdrehen</div>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <div class="card-label">ANTWORT</div>
+          <div class="card-text">${q.a}</div>
+          <div class="card-hint">Tippe um zurück zu drehen</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-actions hidden" id="card-actions">
+      <button class="card-btn card-btn-no" id="card-no">😅 Noch nicht</button>
+      <button class="card-btn card-btn-yes" id="card-yes">✅ Gewusst</button>
+    </div>
+    <div class="nav-row">
+      <button class="nav-btn nav-btn-secondary" id="quit-btn">Abbrechen</button>
+    </div>
+  `;
+
+  const card = document.getElementById('flashcard');
+  card.addEventListener('click', () => {
+    state.flipped = !state.flipped;
+    card.classList.toggle('flipped', state.flipped);
+    if (state.flipped) {
+      document.getElementById('card-actions').classList.remove('hidden');
+    }
+  });
+
+  document.getElementById('card-yes').addEventListener('click', () => {
+    state.correct++;
+    state.totalAnsweredEver++;
+    nextQuestion();
+  });
+  document.getElementById('card-no').addEventListener('click', () => {
+    state.totalAnsweredEver++;
+    nextQuestion();
+  });
+  document.getElementById('quit-btn').addEventListener('click', confirmQuit);
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function nextQuestion() {
+  state.index++;
+  if (state.index >= state.questions.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function confirmQuit() {
+  if (confirm('Lerneinheit wirklich abbrechen? Dein Fortschritt geht verloren.')) {
+    showMenu();
+  }
+}
+
+// ============================================================
+// RESULT
+// ============================================================
+function showResult() {
+  document.getElementById('quiz-screen').classList.add('hidden');
+  document.getElementById('result-screen').classList.remove('hidden');
+
+  const total = state.questions.length;
+  const correct = state.correct;
+  const pct = Math.round((correct / total) * 100);
+
+  let emoji, title, msg;
+  if (pct === 100) {
+    emoji = '🏆'; title = 'Perfekt!';
+    msg = 'Alles richtig, Nina! Du bist eine echte FaGe-Expertin. 🌟';
+  } else if (pct >= 80) {
+    emoji = '🎉'; title = 'Super gemacht!';
+    msg = 'Sehr starkes Ergebnis. Bleib dran – du machst das toll! 💪';
+  } else if (pct >= 60) {
+    emoji = '👍'; title = 'Gut gemacht!';
+    msg = 'Solide Leistung. Schau dir die schwierigen Stellen nochmal an. 📚';
+  } else if (pct >= 40) {
+    emoji = '💪'; title = 'Weiter üben!';
+    msg = 'Du bist auf dem Weg. Wiederholung ist der Schlüssel zum Erfolg!';
+  } else {
+    emoji = '🌱'; title = 'Nicht aufgeben!';
+    msg = 'Lernen braucht Zeit. Probier das Thema gleich nochmal – beim 2. Mal läufts besser!';
+  }
+
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-score').textContent = `${correct} / ${total}`;
+  document.getElementById('result-detail').textContent =
+    state.mode === 'cards' ? 'Karten gewusst' : 'korrekt beantwortet';
+  document.getElementById('result-msg').textContent = msg;
+}
+
+function updateProgress() {
+  const total = state.totalAnsweredEver;
+  document.getElementById('progress-text').textContent = `${total} Einheiten`;
+  const pct = Math.min(100, (total / 50) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+
+function resetProgress() {
+  if (confirm('Fortschritt wirklich zurücksetzen?\n\nAlle bisher beantworteten Einheiten werden auf 0 gesetzt.')) {
+    state.totalAnsweredEver = 0;
+    updateProgress();
+  }
+}
+
+// ============================================================
+// EVENT LISTENERS
+// ============================================================
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => setMode(btn.dataset.mode));
+});
+
+document.querySelectorAll('.topic-card').forEach(card => {
+  card.addEventListener('click', () => startTopic(card.dataset.topic));
+});
+
+document.getElementById('back-btn').addEventListener('click', () => {
+  if (confirm('Zurück zum Menü? Dein aktueller Fortschritt geht verloren.')) {
+    showMenu();
+  }
+});
+
+document.getElementById('result-menu').addEventListener('click', showMenu);
+document.getElementById('result-again').addEventListener('click', () => {
+  startTopic(state.currentTopic);
+});
+document.getElementById('reset-btn').addEventListener('click', resetProgress);
+
+// INIT
+updateMenuMeta();
+updateProgress();
+
+// Service Worker für Offline-Funktion registrieren
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(err => console.log('SW Fehler:', err));
+  });
+}
+</script>
+
+</body>
+</html>
