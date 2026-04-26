@@ -1,7 +1,7 @@
 {
   "name": "FaGe Lernapp · Nina",
   "short_name": "FaGe Lernapp",
-  "description": "FaGe-Lernapp für Nina · 1. Lehrjahr · SMI Spitalverband",
+  "description": "Lernapp für Nina",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
